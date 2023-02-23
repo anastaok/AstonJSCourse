@@ -1,14 +1,21 @@
-const getNumberRadix = (number, radix) => {
-  const validNumber = +number;
-  const message =
-    'Функция getNumberRadix была вызвана с некорректными параметрами';
-  if (
-    Number.isInteger(validNumber) &&
-    validNumber > 0 &&
-    radix >= 2 &&
-    radix <= 16
-  ) {
-    return validNumber.toString(radix);
+const getInterval = (arr, from, to) => {
+  if (!arr.every((elem) => typeof elem === 'number')) {
+    throw Error(
+      'В функцию getInterval были переданы невалидные параметры. Параметр arr должен содержать только числовые значения'
+    );
   }
-  throw Error(message);
+  if (typeof from !== 'number') {
+    throw Error(
+      'В функцию getInterval были переданы невалидные параметры. Параметр from должен быть числом'
+    );
+  }
+  if (typeof to !== 'number') {
+    throw Error(
+      'В функцию getInterval были переданы невалидные параметры. Параметр to должен быть числом'
+    );
+  }
+  if (to < from) {
+    return arr.filter((elem) => elem >= to && elem <= from).reverse();
+  }
+  return arr.filter((elem) => elem >= from && elem <= to);
 };
