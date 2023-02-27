@@ -1,16 +1,20 @@
-const createLiker = () => {
-  let count = 0;
+const createPerson = ({ name = 'new User', skills = [] }) => {
   return {
-    like() {
-      count++;
+    name,
+    skills,
+    addSkill(newSkill) {
+      if (!this.skills.includes(newSkill)) {
+        this.skills.push(newSkill);
+      }
       return this;
     },
-    dislike() {
-      count--;
+    removeSkill(deleteSkill) {
+      this.skills = this.skills.filter((val) => val !== deleteSkill);
       return this;
     },
-    val() {
-      return count;
+    addName(newName) {
+      this.name = newName;
+      return this;
     },
   };
 };

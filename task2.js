@@ -1,21 +1,19 @@
-const getInterval = (arr, from, to) => {
-  if (!arr.every((elem) => typeof elem === 'number')) {
-    throw Error(
-      'В функцию getInterval были переданы невалидные параметры. Параметр arr должен содержать только числовые значения'
-    );
+const ERROR = 'The index cannot be a negative number or a fractional number';
+
+const addElementsToArray = (arr, index) => {
+  return function (...elems) {
+    if (isPositiveIndex(index)) {
+      if (index > arr.length || index === undefined) {
+        return [...arr, ...elems];
+      }
+      const copyArray = [...arr];
+      copyArray.splice(index, 0, ...elems);
+      return copyArray;
+    }
+    throw new Error(ERROR);
+  };
+
+  function isPositiveIndex(index) {
+    return (index > 0 && Number.isInteger(index)) || index === undefined;
   }
-  if (typeof from !== 'number') {
-    throw Error(
-      'В функцию getInterval были переданы невалидные параметры. Параметр from должен быть числом'
-    );
-  }
-  if (typeof to !== 'number') {
-    throw Error(
-      'В функцию getInterval были переданы невалидные параметры. Параметр to должен быть числом'
-    );
-  }
-  if (to < from) {
-    return arr.filter((elem) => elem >= to && elem <= from).reverse();
-  }
-  return arr.filter((elem) => elem >= from && elem <= to);
 };
