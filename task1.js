@@ -1,10 +1,10 @@
-const deleteElementFromArray = (arr, elem) => {
-  const copyArray = [...arr];
-  const indexArray = copyArray.indexOf(elem);
-
-  if (indexArray !== -1) {
-    copyArray.splice(indexArray, 1);
-    return copyArray;
+Array.prototype.filterArray = function (callback, thisArg = null) {
+  const filteredResult = [];
+  for (let i = 0; i <= this.length; i++) {
+    let element = this[i];
+    if (callback.call(thisArg, element, i, this)) {
+      filteredResult.push(element);
+    }
   }
-  return arr;
+  return filteredResult;
 };

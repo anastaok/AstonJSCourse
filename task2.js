@@ -1,19 +1,37 @@
-const ERROR = 'The index cannot be a negative number or a fractional number';
+const Company = function (name, salary) {
+  Company.addStaff({ name: name, income: 0 });
+  this.name = name;
+  this.salary = salary;
 
-const addElementsToArray = (arr, index) => {
-  return function (...elems) {
-    if (isPositiveIndex(index)) {
-      if (index > arr.length || index === undefined) {
-        return [...arr, ...elems];
+  this.income = function (value) {
+    Company.store.money += value - this.salary;
+    Company.store.staffList.map((elem) => {
+      if (elem.name === this.name) {
+        elem.income += value - this.salary;
       }
-      const copyArray = [...arr];
-      copyArray.splice(index, 0, ...elems);
-      return copyArray;
-    }
-    throw new Error(ERROR);
+    });
   };
-
-  function isPositiveIndex(index) {
-    return (index > 0 && Number.isInteger(index)) || index === undefined;
-  }
+  this.spend = function (value) {
+    Company.store.money -= value;
+    Company.store.staffList.map((elem) => {
+      if (elem.name === this.name) {
+        elem.income -= value;
+      }
+    });
+  };
+};
+Company.store = {
+  staffList: [],
+  countStaff: 0,
+  money: 0,
+};
+Company.addStaff = function ({ name, income = 0 }) {
+  this.store.staffList.push({ name, income });
+  this.store.countStaff++;
+};
+Company.getLeaders = function () {
+  const staffList = this.store.staffList;
+  const incomes = staffList.map((elem) => elem.income);
+  const maxValue = Math.max(...incomes);
+  return staffList.filter((elem) => elem.income === maxValue);
 };
