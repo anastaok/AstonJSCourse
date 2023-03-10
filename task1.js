@@ -17,7 +17,6 @@ async function getPosts() {
     console.error(error);
   }
 }
-
 function showPosts(posts) {
   let output = '';
   posts.forEach((post) => {
@@ -30,15 +29,12 @@ function showPosts(posts) {
   });
   postsContainer.innerHTML = output;
 }
-
 function showPagination() {
   const totalPages = Math.ceil(totalPosts / limit);
   let output = '';
-
   if (currentPage > 1) {
     output += `<div class="pagination-btn" onclick="prevPage()">Previous</div>`;
   }
-
   if (totalPages <= 9) {
     for (let i = 1; i <= totalPages; i++) {
       output += `<div class="pagination-btn ${
@@ -74,27 +70,21 @@ function showPagination() {
       }
     }
   }
-
   if (currentPage < totalPages) {
     output += `<div class="pagination-btn" onclick="nextPage()">Next</div>`;
   }
-
   paginationContainer.innerHTML = output;
 }
-
 function goToPage(page) {
   currentPage = page;
   getPosts();
 }
-
 function prevPage() {
   currentPage--;
   getPosts();
 }
-
 function nextPage() {
   currentPage++;
   getPosts();
 }
-
 getPosts();
